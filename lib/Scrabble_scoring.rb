@@ -28,12 +28,51 @@ class Scrabble::Scoring
 
   def self.highest_score_from(array_of_words)
     array_of_scores = []
+
     array_of_words.each do |word|
       array_of_scores << self.score(word)
     end
-    return array_of_words[array_of_scores.index(array_of_scores.max)]
+
+    #print array_of_scores
+
+    max_score = array_of_scores.max
+
+    if array_of_scores.grep(max_score).size == 1
+
+      #puts "Entered first if"
+
+      return array_of_words[array_of_scores.index(max_score)]
+
+    else
+
+      #puts "Entered else"
+
+      max_score_indices = []
+
+      array_of_scores.each_with_index do |score, index|
+        if score == max_score
+          max_score_indices << index
+        end
+      end
+
+      #print max_score_indices
+      puts
+
+      max_scoring_word = array_of_words[max_score_indices[0]]
+      #puts max_scoring_word
+
+      max_score_indices.each do |index|
+        if array_of_words[index].length < max_scoring_word.length
+          max_scoring_word = array_of_words[index]
+        end
+      end
+
+      return max_scoring_word
+
+    end
+
   end
 
 end
 
-# Scrabble::Scoring.score("A")
+#Scrabble::Scoring.highest_score_from(["gats", "bat", "aaaa"])

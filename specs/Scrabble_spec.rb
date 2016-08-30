@@ -22,4 +22,13 @@ describe "Testing Scrabble scoring" do
   it "The highest score from array of words, no tie" do
     expect(Scrabble::Scoring.highest_score_from(["cat", "fox", "xxxxxxx"])).must_equal("XXXXXXX")
   end
+
+  it "If there is a tie, it's better to use fewer tiles (favor the shorter word)" do
+    expect(Scrabble::Scoring.highest_score_from(["gats", "bat", "aaaa"])).must_equal("BAT")
+  end
+
+  it "If there is a three-way tie, the word with fewer tiles is chosen" do
+    expect(Scrabble::Scoring.highest_score_from(["hi", "gats", "bat", "aaaa"])).must_equal("HI")
+  end
+
 end
