@@ -27,12 +27,22 @@ attr_reader :name
     end
   end
 
+#total_score: Returns the sum of scores of played words
+  def total_score
+    total_score = 0
+    @plays.each do |word|
+      total_score += Scrabble::Scoring.score(word)
+    end
+    return total_score
+  end
+
 end
 
 
 
 
-#total_score: Returns the sum of scores of played words
+
+
 #won?: If the player has over 100 points, returns true, otherwise returns false
 #highest_scoring_word: Returns the highest scoring played word
 #highest_word_score: Returns the highest_scoring_word score
