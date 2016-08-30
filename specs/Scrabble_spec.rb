@@ -31,4 +31,13 @@ describe "Testing Scrabble scoring" do
     expect(Scrabble::Scoring.highest_score_from(["hi", "gats", "bat", "aaaa"])).must_equal("HI")
   end
 
+  it "If there is a 7-letter word that is tied with a shorter word, the 7-letter word wins" do
+    expect(Scrabble::Scoring.highest_score_from(["aaaaaay", "bat", "zzzzzz", "aaaa"])).must_equal("AAAAAAY")
+  end
+
+  it "If multiple words have the same score and same length, the first one wins" do
+    expect(Scrabble::Scoring.highest_score_from(["bat", "pat", "mat", "cat"])).must_equal("BAT")
+    expect(Scrabble::Scoring.highest_score_from(["AAAAAAA", "pat", "mat", "EEEEEEE"])).must_equal("AAAAAAA")
+  end
+
 end
