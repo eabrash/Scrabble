@@ -11,8 +11,15 @@ describe "Testing Scrabble scoring" do
     expect(Scrabble::Scoring.score("WE")).must_equal(5)
   end
 
+  it "A lowercase two-letter word is correctly scored" do
+    expect(Scrabble::Scoring.score("we")).must_equal(5)
+  end
+
   it "A word with seven letters gets a 50-point bonus" do
     expect(Scrabble::Scoring.score("AAAAAAA")).must_equal(57)
   end
 
+  it "The highest score from array of words, no tie" do
+    expect(Scrabble::Scoring.highest_score_from(["cat", "fox", "xxxxxxx"])).must_equal("XXXXXXX")
+  end
 end

@@ -13,9 +13,8 @@ class Scrabble::Scoring
    }
 
    def self.score(word)
-
     score = 0
-
+    word.upcase!
     word.each_char do |letter|
       score += LETTER_VALUES[letter]
     end
@@ -25,11 +24,16 @@ class Scrabble::Scoring
     end
 
     return score
-
-    #  print LETTER_VALUES
-    #  print LETTER_VALUES[word]
-    #  return LETTER_VALUES[word]
    end
+
+  def self.highest_score_from(array_of_words)
+    array_of_scores = []
+    array_of_words.each do |word|
+      array_of_scores << self.score(word)
+    end
+    return array_of_words[array_of_scores.index(array_of_scores.max)]
+  end
+
 end
 
 # Scrabble::Scoring.score("A")
