@@ -44,6 +44,16 @@ attr_reader :name
       return @won = true
     end
   end
+
+#highest_scoring_word: Returns the highest scoring played word
+  def highest_scoring_word
+    return Scrabble::Scoring.highest_score_from(@plays)
+  end
+#highest_word_score: Returns the highest_scoring_word score
+  def highest_word_score
+    return Scrabble::Scoring.score(highest_scoring_word)
+  end
+  
 end
 
 bob = Scrabble::Player.new("Bob")
@@ -51,10 +61,3 @@ bob.play("frog")
 bob.play("toad")
 puts "Total score: " + bob.total_score.to_s
 print "Plays: " + bob.plays.to_s + "\n"
-
-
-
-
-
-#highest_scoring_word: Returns the highest scoring played word
-#highest_word_score: Returns the highest_scoring_word score
