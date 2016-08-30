@@ -17,7 +17,7 @@ attr_reader :name
   def play(word)
     @plays << word
   end
-  
+
 end
 
 

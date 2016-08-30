@@ -7,7 +7,13 @@ describe "Testing Scrabble player" do
   it "Returns the player's name" do
     expect(Scrabble::Player.new("Bob").name).must_equal("Bob")
   end
-  
+
+  it "Return the word(s) played by the player" do
+    bob = Scrabble::Player.new("Bob")
+    expect(bob.play("frog")).must_equal(["frog"])
+    expect(bob.play("toad")).must_equal(["frog", "toad"])
+  end
+
 end
 #----------------------------------------------------
 describe "Testing Scrabble scoring" do
