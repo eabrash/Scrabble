@@ -2,7 +2,6 @@ require_relative "../Scrabble_module"
 
 class Scrabble::Scoring
 
-
   LETTER_VALUES = {"A"=> 1, "E"=> 1, "I"=> 1, "O"=> 1, "U"=> 1, "L"=> 1, "N"=> 1, "R"=> 1, "S"=> 1, "T"=> 1,
   "D"=> 2, "G"=> 2,
   "B"=> 3, "C"=> 3, "M"=> 3, "P"=> 3,
@@ -18,7 +17,7 @@ class Scrabble::Scoring
     word.each_char do |letter|
       score += LETTER_VALUES[letter]
     end
-
+# 50 point bonus for using all 7 tiles
     if word.length == 7
       score += 50
     end
@@ -32,16 +31,14 @@ class Scrabble::Scoring
     array_of_words.each do |word|
       array_of_scores << self.score(word)
     end
-
+#Combine the array_of_words and array_of_scores into a 2D array where the word and its score are stored in the same element of the primary array => [[word, score], [word2, score2]]
     array_of_word_scores = array_of_words.zip(array_of_scores)
-    # print array_of_word_scores
 
     max_score = array_of_scores.max
-# There is a bonus for words that are seven letters. If the top score is tied between multiple words and one used all seven letters, choose the one with seven letters over the one with fewer tiles.
 
 #There are no tie scores
     if array_of_scores.grep(max_score).size == 1
-
+#Find the in index of the max_score in the array_of_scores, then go to the same index in the array_of_word and return the associated word
       return array_of_words[array_of_scores.index(max_score)]
 #There is more than one word with the same high score
     else
@@ -58,11 +55,9 @@ class Scrabble::Scoring
       #If the word is shorter than the first word with a high score, it becomes the winning word
       elsif x[0].length < winner[0].length
         winner = x
-      end #of condtional in do
-    end #of do
+      end
+    end
       return winner[0]
-  end#of array of words method
+  end
 
-end#of class
-
-#Scrabble::Scoring.highest_score_from(["gats", "bat", "aaaa"])
+end
