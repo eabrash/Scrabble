@@ -49,6 +49,12 @@ describe "Testing Scrabble player" do
     expect(robert.play("CAT")).must_equal(false)
   end
 
+  it "Confirm that a winner cannot continue playing when they win in one step" do
+    robert = Scrabble::Player.new("Robert")
+    robert.play("ZZZZZZZ")
+    expect(robert.play("Q")).must_equal(false)
+  end
+
   it "Confirm that an empty play returns a score of zero" do
     robert = Scrabble::Player.new("Robert")
     expect(robert.play("")).must_equal(0)
@@ -61,13 +67,7 @@ describe "Testing Scrabble player" do
     expect(robert.plays).must_equal(["", "DOG"])
   end
 
-  it "Confirm that a winner cannot continue playing when they win in one step" do
-    robert = Scrabble::Player.new("Robert")
-    robert.play("ZZZZZZZ")
-    expect(robert.play("Q")).must_equal(false)
-  end
-
-  it "Test ability to return highest scoring played word" do
+  it "Test ability to return highest-scoring played word" do
     bob = Scrabble::Player.new("Bob")
     bob.play("frog")
     bob.play("toad")
