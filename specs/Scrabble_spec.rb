@@ -10,8 +10,15 @@ describe "Testing Scrabble player" do
 
   it "Return the word(s) played by the player" do
     bob = Scrabble::Player.new("Bob")
-    expect(bob.play("frog")).must_equal(["frog"])
-    expect(bob.play("toad")).must_equal(["frog", "toad"])
+    bob.play("frog")
+    bob.play("toad")
+    expect(bob.plays).must_equal(["FROG", "TOAD"])
+  end
+
+  it "Test ability of play to return a word score" do
+    bob = Scrabble::Player.new("Bob")
+    expect(bob.play("frog")).must_equal(8)
+    expect(bob.play("toad")).must_equal(5)
   end
 
 end
