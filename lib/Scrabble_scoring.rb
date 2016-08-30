@@ -33,46 +33,36 @@ class Scrabble::Scoring
       array_of_scores << self.score(word)
     end
 
-    #print array_of_scores
+    array_of_word_scores = array_of_words.zip(array_of_scores)
+    # print array_of_word_scores
 
     max_score = array_of_scores.max
+# There is a bonus for words that are seven letters. If the top score is tied between multiple words and one used all seven letters, choose the one with seven letters over the one with fewer tiles.
 
+#There are no tie scores
     if array_of_scores.grep(max_score).size == 1
 
-      #puts "Entered first if"
-
       return array_of_words[array_of_scores.index(max_score)]
-
+#There is more than one word with the same high score
     else
-
-      #puts "Entered else"
-
-      max_score_indices = []
-
-      array_of_scores.each_with_index do |score, index|
-        if score == max_score
-          max_score_indices << index
-        end
-      end
-
-      #print max_score_indices
-      puts
-
-      max_scoring_word = array_of_words[max_score_indices[0]]
-      #puts max_scoring_word
-
-      max_score_indices.each do |index|
-        if array_of_words[index].length < max_scoring_word.length
-          max_scoring_word = array_of_words[index]
-        end
-      end
-
-      return max_scoring_word
-
+#Isolate the highest scoring words
+      array_of_max_scoring_words_and_scores  = array_of_word_scores.select{|x| x[1]==max_score}
     end
+#Find and compare the length of high score words
+ winner = array_of_max_scoring_words_and_scores[0]
 
-  end
+  array_of_max_scoring_words_and_scores.each do |x|
+    #If the word length is 7, the word wins
+      if x[0].length == 7
+        return x[0]
+      #If the word is shorter than the first word with a high score, it becomes the winning word
+      elsif x[0].length < winner[0].length
+        winner = x
+      end #of condtional in do
+    end #of do
+      return winner[0]
+  end#of array of words method
 
-end
+end#of class
 
 #Scrabble::Scoring.highest_score_from(["gats", "bat", "aaaa"])
