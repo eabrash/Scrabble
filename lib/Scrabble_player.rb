@@ -38,7 +38,11 @@ attr_reader :name
 
 end
 
-
+bob = Scrabble::Player.new("Bob")
+bob.play("frog")
+bob.play("toad")
+puts "Total score: " + bob.total_score.to_s
+print "Plays: " + bob.plays.to_s + "\n"
 
 
 

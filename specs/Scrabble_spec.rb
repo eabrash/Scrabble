@@ -21,6 +21,13 @@ describe "Testing Scrabble player" do
     expect(bob.play("toad")).must_equal(5)
   end
 
+  it "Test ability of play to return a word score" do
+    bob = Scrabble::Player.new("Bob")
+    bob.play("frog")
+    bob.play("toad")
+    expect(bob.total_score).must_equal(13)  
+  end
+
 end
 #----------------------------------------------------
 describe "Testing Scrabble scoring" do
