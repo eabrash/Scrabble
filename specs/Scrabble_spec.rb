@@ -1,7 +1,15 @@
 require_relative "Spec_helper"
 require_relative "../lib/Scrabble_scoring"
+require_relative "../lib/Scrabble_player"
 
+describe "Testing Scrabble player" do
 
+  it "Returns the player's name" do
+    expect(Scrabble::Player.new("Bob").name).must_equal("Bob")
+  end
+  
+end
+#----------------------------------------------------
 describe "Testing Scrabble scoring" do
 
   it "Letter A is worth one point" do
