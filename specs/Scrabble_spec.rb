@@ -25,7 +25,20 @@ describe "Testing Scrabble player" do
     bob = Scrabble::Player.new("Bob")
     bob.play("frog")
     bob.play("toad")
-    expect(bob.total_score).must_equal(13)  
+    expect(bob.total_score).must_equal(13)
+  end
+
+  it "Test ability of player to win" do
+    robert = Scrabble::Player.new("Robert")
+    expect(robert.won?).must_equal(false)
+    robert.play("ZZZZZZZ")
+    expect(robert.won?).must_equal(true)
+  end
+
+  it "Confirm that a winner cannot continue playing" do
+    robert = Scrabble::Player.new("Robert")
+    robert.play("ZZZZZZZ")
+    expect(robert.play("Q")).must_equal(false)
   end
 
 end

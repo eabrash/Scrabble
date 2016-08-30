@@ -19,13 +19,12 @@ attr_reader :name
 # Returns false if player has already won
 # Returns the score of the word
   def play(word)
-    unless @won == true
+    if won? == false
        @plays << word
        return Scrabble::Scoring.score(word)
     else
       return false
     end
-    won?
   end
 
 #total_score: Returns the sum of scores of played words
