@@ -13,9 +13,22 @@ class Scrabble::Scoring
    }
 
    def self.score(word)
+
+    score = 0
+
+    word.each_char do |letter|
+      score += LETTER_VALUES[letter]
+    end
+
+    if word.length == 7
+      score += 50
+    end
+
+    return score
+
     #  print LETTER_VALUES
     #  print LETTER_VALUES[word]
-     return LETTER_VALUES[word]
+    #  return LETTER_VALUES[word]
    end
 end
 
