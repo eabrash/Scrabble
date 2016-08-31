@@ -2,17 +2,37 @@ require_relative "../Scrabble_module"
 require_relative "Scrabble_scoring"
 
 class Scrabble::Player
+
 attr_reader :name
 
   def initialize(name)
     @name = name
     @plays = []
     @won = false
+    @tiles = []
   end
 #plays: returns an Array of the words played by the player
 
   def plays
     return @plays
+  end
+
+  def tiles
+    if @tiles.length <= 7
+      return @tiles
+    else
+      raise ArgumentError
+    end
+  end
+
+  def draw_tiles(tile_bag)
+
+    num_to_draw = 7 - @tiles.length
+
+    @tiles.concat(tile_bag.draw_tiles(num_to_draw))
+
+    return @tiles
+
   end
 
 #play(word): Adds the input word to the plays Array
@@ -53,7 +73,7 @@ attr_reader :name
   def highest_word_score
     return Scrabble::Scoring.score(highest_scoring_word)
   end
-  
+
 end
 
 bob = Scrabble::Player.new("Bob")
