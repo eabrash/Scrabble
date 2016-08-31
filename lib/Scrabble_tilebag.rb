@@ -60,6 +60,8 @@ class Scrabble::Tilebag
 
     @tile_bag = @tile_bag.flatten.sort
 
+    puts @tile_bag
+
   end
 
 end
