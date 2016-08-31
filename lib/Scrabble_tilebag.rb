@@ -7,6 +7,8 @@ DEFAULT_HASH = {"A" => 9,	"N" => 6, "B" => 2,	"O" => 8, "C" => 2,	"P" => 2,
 
 class Scrabble::Tilebag
 
+  attr_reader :tile_bag
+
   def initialize
 
     fill_default_tile_bag
