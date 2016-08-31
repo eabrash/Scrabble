@@ -1,5 +1,6 @@
 require_relative "../Scrabble_module"
 require_relative "Scrabble_scoring"
+require_relative "Scrabble_tilebag"
 
 class Scrabble::Player
 
@@ -12,7 +13,6 @@ attr_reader :name
     @tiles = []
   end
 #plays: returns an Array of the words played by the player
-
   def plays
     return @plays
   end
