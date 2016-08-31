@@ -23,6 +23,9 @@ class Scrabble::Tilebag
     # print @tile_bag
     #
     # puts
+    if num > 7
+        raise ArgumentError
+    end
 
     letters_picked = @tile_bag.sample(num)
 

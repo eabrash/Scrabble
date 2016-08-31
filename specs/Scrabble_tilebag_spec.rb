@@ -3,9 +3,11 @@ require_relative "../lib/Scrabble_tilebag"
 
 describe "Testing Scrabble tilebag" do
 
-  it "Pull 1 tile" do
+  it "Pull the correct number of tiles or throw an error if you try to pull more than 7" do
     mytilebag = Scrabble::Tilebag.new
     expect(mytilebag.draw_tiles(1).length).must_equal(1)
+    expect(mytilebag.draw_tiles(3).length).must_equal(3)
+    expect(proc{mytilebag.draw_tiles(8).length}).must_raise ArgumentError
   end
 
   it "Reports correct number of tiles remaining before drawing tiles" do
@@ -33,14 +35,14 @@ describe "Testing Scrabble tilebag" do
     tiles = mytilebag.draw_tiles(7)
     late_tilebag = mytilebag.tile_bag
 
-    # print "EARLY: " + early_tilebag.to_s + "\n"
-    # print "Late: " + late_tilebag.to_s + "\n"
-    # print "Tiles: " + tiles.to_s + "\n"
-
     tiles.each do |tile|
       expect(early_tilebag.count(tile)-late_tilebag.count(tile)).must_equal(tiles.count(tile))
     end
-
   end
+
+  # it "Won't let you draw tiles from an empty tile bag."
+  # end
+  #
+  # it "Will give you the remaining tiles if you ask for more tiles than are in the bag."
 
 end
