@@ -1,5 +1,6 @@
 require_relative "Spec_helper"
 require_relative "../lib/Scrabble_player"
+require_relative "../lib/Scrabble_tilebag"
 
 describe "Testing Scrabble player" do
 
@@ -87,4 +88,16 @@ describe "Testing Scrabble player" do
     expect(bob.highest_scoring_word).must_equal("AAAAAAA")
   end
 
+  it "Player draws to have 7 tiles" do
+    bob = Scrabble::Player.new("Bob")
+    bob.draw_tiles(Scrabble::Tilebag.new)
+    expect(bob.tiles.length).must_equal(7)
+  end
+
+  it "Player's drawn tiles match stored tiles" do
+    bob = Scrabble::Player.new("Bob")
+    drawn_tiles = bob.draw_tiles(Scrabble::Tilebag.new)
+    expect(bob.tiles).must_equal(drawn_tiles)
+  end
+  
 end
