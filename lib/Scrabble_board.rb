@@ -2,6 +2,8 @@ require_relative "../Scrabble_module"
 
 class Scrabble::Board
 
+  attr_reader :board
+
   def initialize
     @board = [[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
               [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
@@ -39,7 +41,18 @@ class Scrabble::Board
     end
   end
 
+  def draw_board
+
+    @board.each do |row|
+      print row.to_s + "\n"
+    end
+
+  end
+
   def play_word_on_board(word, coordinates, is_horizontal)
+
+    word.upcase!
+
     if can_put_word_on_board?(word, coordinates, is_horizontal) == true
         @board[coordinates[0]][coordinates[1]]= word[0]
         row = coordinates[0]
@@ -57,7 +70,7 @@ class Scrabble::Board
           end
         end
 
-        print @board
+        draw_board
         return true
 
     else
