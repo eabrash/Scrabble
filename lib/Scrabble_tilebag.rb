@@ -17,21 +17,21 @@ class Scrabble::Tilebag
 
   def draw_tiles(num)
 
-    # puts "Length of default_tiles: " + @default_tiles.length.to_s
-    # print @default_tiles
+    # puts "Length of default_tiles: " + @tile_bag.length.to_s
+    # print @tile_bag
     #
     # puts
 
-    letters_picked = @default_tiles.sample(num)
+    letters_picked = @tile_bag.sample(num)
 
     letters_picked.each do |tile|
-      @default_tiles.delete_at(@default_tiles.index(tile))
+      @tile_bag.delete_at(@tile_bag.index(tile))
     end
 
     # print "Letters picked: " + letters_picked.to_s + "\n"
     #
-    # puts "NEW Length of default_tiles: " + @default_tiles.length.to_s
-    # print @default_tiles
+    # puts "NEW Length of default_tiles: " + @tile_bag.length.to_s
+    # print @tile_bag
     #
     # puts
 
@@ -39,17 +39,21 @@ class Scrabble::Tilebag
 
   end
 
+  def tiles_remaining
+    return @tile_bag.length
+  end
+
   private
 
   def fill_default_tile_bag
 
-    @default_tiles = []
+    @tile_bag = []
 
     DEFAULT_HASH.each do |k,v|
-      @default_tiles << Array.new(v, k)
+      @tile_bag << Array.new(v, k)
     end
 
-    @default_tiles = @default_tiles.flatten.sort
+    @tile_bag = @tile_bag.flatten.sort
 
   end
 
