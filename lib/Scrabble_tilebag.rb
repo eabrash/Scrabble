@@ -9,8 +9,33 @@ class Scrabble::Tilebag
 
   def initialize
 
-    @default_tiles = []
-    @default_tiles = fill_default_tile_bag
+    fill_default_tile_bag
+
+  end
+
+  #draw_tiles(num) returns num number of random tiles, removes the tiles from the default set
+
+  def draw_tiles(num)
+
+    # puts "Length of default_tiles: " + @default_tiles.length.to_s
+    # print @default_tiles
+    #
+    # puts
+
+    letters_picked = @default_tiles.sample(num)
+
+    letters_picked.each do |tile|
+      @default_tiles.delete_at(@default_tiles.index(tile))
+    end
+
+    # print "Letters picked: " + letters_picked.to_s + "\n"
+    #
+    # puts "NEW Length of default_tiles: " + @default_tiles.length.to_s
+    # print @default_tiles
+    #
+    # puts
+
+    return letters_picked
 
   end
 
@@ -18,16 +43,17 @@ class Scrabble::Tilebag
 
   def fill_default_tile_bag
 
+    @default_tiles = []
+
     DEFAULT_HASH.each do |k,v|
       @default_tiles << Array.new(v, k)
     end
 
     @default_tiles = @default_tiles.flatten.sort
 
-    print @default_tiles
-
   end
 
 end
 
 my_tilebag = Scrabble::Tilebag.new
+my_tilebag.draw_tiles(5)
