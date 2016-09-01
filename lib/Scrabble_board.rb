@@ -22,8 +22,7 @@ class Scrabble::Board
               [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]]
   end
 
-  def can_put_word_on_board?(word, coordinates, is_horizontal)  # true = horizontal false = vertical; coords = [row, column]
-
+  def can_fit_on_board?(word, coordinates, is_horizontal)
     if is_horizontal
       available_spaces = 15 - coordinates[1]
       if available_spaces >= word.length
@@ -41,6 +40,17 @@ class Scrabble::Board
     end
   end
 
+  # def touches_other_letters?(word, coordinates, is_horizontal)
+  #
+  # end
+  #
+  #
+  # def can_put_word_on_board?(word, coordinates, is_horizontal)  # true = horizontal false = vertical
+  #   if can_fit_on_board? == true
+  #   end
+  #
+  # end
+
   def draw_board
 
     @board.each do |row|
@@ -53,7 +63,7 @@ class Scrabble::Board
 
     word.upcase!
 
-    if can_put_word_on_board?(word, coordinates, is_horizontal) == true
+    if can_fit_on_board?(word, coordinates, is_horizontal) == true #these will change if we move forward! 
         @board[coordinates[0]][coordinates[1]]= word[0]
         row = coordinates[0]
         column = coordinates[1]
