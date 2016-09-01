@@ -88,6 +88,14 @@ describe "Testing Scrabble player" do
     expect(bob.highest_scoring_word).must_equal("AAAAAAA")
   end
 
+  it "Test ability to correctly return the high-scoring word in case of a six- and seven-letter word that are tied" do
+    bob = Scrabble::Player.new("Bob")
+    bob.play("eeee")
+    bob.play("fasters")
+    bob.play("qqqqqq")
+    expect(bob.highest_scoring_word).must_equal("FASTERS")
+  end
+
   it "Player draws to have 7 tiles" do
     bob = Scrabble::Player.new("Bob")
     bob.draw_tiles(Scrabble::Tilebag.new)
@@ -99,5 +107,5 @@ describe "Testing Scrabble player" do
     drawn_tiles = bob.draw_tiles(Scrabble::Tilebag.new)
     expect(bob.tiles).must_equal(drawn_tiles)
   end
-  
+
 end
