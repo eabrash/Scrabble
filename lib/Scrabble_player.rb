@@ -35,6 +35,14 @@ attr_reader :name
 
   end
 
+  # This is a "cheat" method that is useful for testing. We use it to set the
+  # player's tiles to a known set so that we can tell whether tiles are
+  # correctly being removed when the player plays.
+
+  def set_tiles(preset_tiles)
+    @tiles = preset_tiles
+  end
+
 #play(word): Adds the input word to the plays Array
 # Returns false if player has already won
 # Returns the score of the word
@@ -91,11 +99,11 @@ attr_reader :name
 
 end
 
-bob = Scrabble::Player.new("Bob")
-bob.draw_tiles(Scrabble::Tilebag.new)
-puts bob.tiles
-puts bob.play("a")
-puts bob.tiles
+# bob = Scrabble::Player.new("Bob")
+# bob.draw_tiles(Scrabble::Tilebag.new)
+# puts bob.tiles
+# puts bob.play("a")
+# puts bob.tiles
 
 # bob.play("toad")
 # puts "Total score: " + bob.total_score.to_s
