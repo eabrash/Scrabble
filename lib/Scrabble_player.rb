@@ -91,11 +91,11 @@ attr_reader :name
 
 end
 
-bob = Scrabble::Player.new("Bob")
-bob.draw_tiles(Scrabble::Tilebag.new)
-puts bob.tiles
-puts bob.play("a")
-puts bob.tiles
+# bob = Scrabble::Player.new("Bob")
+# bob.draw_tiles(Scrabble::Tilebag.new)
+# puts bob.tiles
+# puts bob.play("a")
+# puts bob.tiles
 
 # bob.play("toad")
 # puts "Total score: " + bob.total_score.to_s
