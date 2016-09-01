@@ -136,4 +136,36 @@ describe "Testing Scrabble player" do
     expect(bob.tiles).must_equal(drawn_tiles)
   end
 
+  it "Sets the players tiles to a preset group of tiles (cheat)" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D"])
+    expect(bob.tiles).must_equal(["T","O","A","D"])
+  end
+
+  it "Ensures the player can only play words if they have the correct tiles for that word" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    expect(bob.play("TOAD")).must_equal(5)
+  end
+
+  it "Ensures played tiles are no longer in the player's tile tray" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    bob.play("TOAD")
+    expect(bob.tiles).must_equal(["X"])
+  end
+
+  it "Ensures a player can not play a word they don't have the tiles for" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    expect(bob.play("FROG")).must_equal(false)
+  end
+
+  it "Ensures a player can not play a word they don't have the tiles for, and that those tiles are not removed from their tray" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    bob.play("FROG")
+    expect(bob.tiles).must_equal(["T","O","A","D","X"])
+  end
+
 end
