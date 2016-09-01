@@ -39,8 +39,23 @@ attr_reader :name
 # Returns false if player has already won
 # Returns the score of the word
   def play(word)
+    word.upcase!
     if won? == false
+      #do they have the tiles to play the word they want?
+      tiles_to_check = @tiles.clone
+        word.each_char do |letter|
+          if tiles_to_check.index(letter) == nil
+            return false
+          else
+          tiles_to_check.delete_at(tiles_to_check.index(letter))
+          end
+        end
        @plays << word
+#delete the played tiles from the player's tile try (@tiles)
+       word.each_char do |letter|
+       @tiles.delete_at(@tiles.index(letter))
+        end
+
        return Scrabble::Scoring.score(word)
     else
       return false
@@ -77,7 +92,11 @@ attr_reader :name
 end
 
 bob = Scrabble::Player.new("Bob")
-bob.play("frog")
-bob.play("toad")
-puts "Total score: " + bob.total_score.to_s
-print "Plays: " + bob.plays.to_s + "\n"
+bob.draw_tiles(Scrabble::Tilebag.new)
+puts bob.tiles
+puts bob.play("a")
+puts bob.tiles
+
+# bob.play("toad")
+# puts "Total score: " + bob.total_score.to_s
+# print "Plays: " + bob.plays.to_s + "\n"
