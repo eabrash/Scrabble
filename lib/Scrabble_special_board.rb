@@ -106,7 +106,6 @@ class Scrabble::Board
 
   end
 
-
   def can_fit_on_board?(word, coordinates, is_horizontal)
     if is_horizontal
       available_spaces = 15 - coordinates[1]
@@ -125,42 +124,86 @@ class Scrabble::Board
     end
   end
 
+  def are_spots_available?(word, coordinates, is_horizontal)
+    row = coordinates[0]
+    column = coordinates[1]
+    any_filled = false
+    if is_horizontal == true
+      word.each_char do
+        if @board[row][column] != nil
+          any_filled = true
+          break
+        end
+        column += 1
+      end
+    else
+      word.each_char do
+        if @board[row][column]
+          any_filled = true
+          break
+        end
+      row += 1
+      end
+    end
+    return any_filled
+  end
+
   def touches_other_letters?(word, coordinates, is_horizontal)
 
     not_nils_array = []
 
     row = coordinates[0]
     column = coordinates[1]
+    if is_horizontal == false
+      # TOP neighbor
+      if @board[row-1][column] != nil
+        not_nils_array << [row-1,column]
+      end
 
-    # TOP neighbor
+      # Bottom neighbor
+      if @board[row + word.length][column] != nil
+        not_nils_array << [row + word.length, column]
+      end
 
-    if @board[row-1][column] != nil
-      not_nils_array << [row-1,column]
-    end
+      # Neighbors on the sides
+      word.each_char do
 
-    # Bottom neighbor
+        if @board[row][column-1] != nil
+          not_nils_array << [row, column-1]
+        end
 
-    if @board[row + word.length][column] != nil
-      not_nils_array << [row + word.length, column]
-    end
+        if @board[row][column+1] != nil
+          not_nils_array << [row, column+1]
+        end
 
-    # Neighbors on the sides
+        row += 1
+      end
+      return not_nils_array
 
-    word.each_char do
-
+    else
+      #left neighbor
       if @board[row][column-1] != nil
-        not_nils_array << [row, column-1]
+        not_nils_array << [row,column-1]
       end
-
-      if @board[row][column+1] != nil
-        not_nils_array << [row, column+1]
+      #right neighbor
+      if @board[row][column+word.length] != nil
+        not_nils_array << [row,column+word.length]
       end
+      #top neighbors
+      word.each_char do
+        if @board[row+1][column] != nil
+          not_nils_array << [row+1, column]
+        end
+       #bottom neighbors
+        if @board[row-1][column] != nil
+          not_nils_array << [row-1, column]
+        end
 
-      row += 1
+        column += 1
+      end
+      return not_nils_array
+
     end
-
-    return not_nils_array
-
   end
 
 
