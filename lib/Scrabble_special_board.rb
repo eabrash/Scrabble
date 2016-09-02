@@ -125,11 +125,45 @@ class Scrabble::Board
     end
   end
 
-  # def touches_other_letters?(word, coordinates, is_horizontal)
-  #
-  # end
-  #
-  #
+  def touches_other_letters?(word, coordinates, is_horizontal)
+
+    not_nils_array = []
+
+    row = coordinates[0]
+    column = coordinates[1]
+
+    # TOP neighbor
+
+    if @board[row-1][column] != nil
+      not_nils_array << [row-1,column]
+    end
+
+    # Bottom neighbor
+
+    if @board[row + word.length][column] != nil
+      not_nils_array << [row + word.length, column]
+    end
+
+    # Neighbors on the sides
+
+    word.each_char do
+
+      if @board[row][column-1] != nil
+        not_nils_array << [row, column-1]
+      end
+
+      if @board[row][column+1] != nil
+        not_nils_array << [row, column+1]
+      end
+
+      row += 1
+    end
+
+    return not_nils_array
+
+  end
+
+
   # def can_put_word_on_board?(word, coordinates, is_horizontal)  # true = horizontal false = vertical
   #   if can_fit_on_board? == true
   #   end
@@ -176,5 +210,11 @@ class Scrabble::Board
 end
 
 board = Scrabble::Board.new
-puts "Playing CAT at 0,0: " + board.score_from_special_board("cat", [0,0], true).to_s
-puts "Playing TOAD at 0,0: " + board.score_from_special_board("toad", [0,0], true).to_s
+
+puts "Can we play CAT at 4, 7? : " + board.touches_other_letters?("CAT", [4,7], false).to_s
+puts "Playing CAT at 4,7: " + board.play_word_on_board("cat", [4,7], false).to_s
+board.draw_board
+
+puts "Can we play [A]NT at 5, 8? : " + board.touches_other_letters?("NT", [5,8], true).to_s
+puts "Playing [A]NT at 5,8: " + board.play_word_on_board("NT", [5,8], true).to_s
+board.draw_board
