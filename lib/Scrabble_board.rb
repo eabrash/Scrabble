@@ -83,8 +83,8 @@ class Scrabble::Board
         # draw_board
         return true
 
-    # else
-    #   return false
+    else
+      return false
     end
   end
 
