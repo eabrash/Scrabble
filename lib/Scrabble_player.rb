@@ -69,8 +69,8 @@ attr_reader :name
   def play(word)
     word.upcase!
     if won? == false && tiles_match_word?(word) == true
-      if dictionary_on == true
-        if dictionary_contains_word(word) == false
+      if @dictionary_on == true
+        if dictionary_contains_word?(word) == false
           return false
         end
       end

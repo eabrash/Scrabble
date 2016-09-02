@@ -167,4 +167,19 @@ describe "Testing Scrabble player" do
     bob.play("FROG")
     expect(bob.tiles).must_equal(["T","O","A","D","X"])
   end
+
+  it "Check that a player can play a word that's in the dictionary when the dictionary is on" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    bob.dictionary_on = true
+    expect(bob.play("TOAD")).must_equal(5)
+  end
+
+  it "Check that a player cannot play a word that's not in the dictionary when the dictionary is on" do
+    bob = Scrabble::Player.new("Bob")
+    bob.set_tiles(["T","O","A","D","X"])
+    bob.dictionary_on = true
+    expect(bob.play("DTX")).must_equal(false)
+  end
+
 end
