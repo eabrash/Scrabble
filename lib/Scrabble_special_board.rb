@@ -1,4 +1,5 @@
 require_relative "../Scrabble_module"
+require_relative "Scrabble_scoring"
 
 class Scrabble::Board
 
@@ -39,16 +40,49 @@ class Scrabble::Board
           end
 
   def incorporate_special_letter(letter, row, column)
-       if SPECIAL_BOARD[row][column] == nil || SPECIAL_BOARD[row][column] == "*"
+       letter.upcase!
+       puts "Letter: #{letter}, Row: #{row}, Column: #{column}"
+       if SPECIAL_BOARD[row][column] == nil || SPECIAL_BOARD[row][column] == "*" || SPECIAL_BOARD[row][column] == "2W" || SPECIAL_BOARD[row][column] == "3W"
+         puts "If not letter-ly special"
          return Scrabble::Scoring.score(letter)
-       elsif SPECIAL_BOARD[row][column].last == "2L"
+       elsif SPECIAL_BOARD[row][column] == "2L"
+          puts "If 2L special"
           return Scrabble::Scoring.score(letter) * 2
-       elsif SPECIAL_BOARD[row][column].last == "3l"
+       elsif SPECIAL_BOARD[row][column] == "3L"
+          puts "If 3L special"
           return Scrabble::Scoring.score(letter) * 3
+        else
+          puts "WEIRDNESS OCCURRED"
        end
   end
 
-  def score_from_special_board(word, coordinates, is_horizontal?)
+  def incorporate_special_word(word, row, column, is_horizontal, score)
+
+    if is_horizontal == true
+      word.each_char do |letter|
+        if SPECIAL_BOARD[row][column] == "2W"
+          score *= 2
+        elsif SPECIAL_BOARD[row][column] == "3W"
+          score *= 3
+        end
+        column += 1
+      end
+    else
+      word.each_char do |letter|
+        if SPECIAL_BOARD[row][column] == "2W"
+          score *= 2
+        elsif SPECIAL_BOARD[row][column] == "3W"
+          score *= 3
+        end
+        row += 1
+      end
+    end
+
+    return score
+
+  end
+
+  def score_from_special_board(word, coordinates, is_horizontal)
 
     row = coordinates[0]
     column = coordinates[1]
@@ -64,6 +98,12 @@ class Scrabble::Board
         score += incorporate_special_letter(letter, row, column)
         row += 1
       end
+    end
+
+    score = incorporate_special_word(word, coordinates[0], coordinates[1], is_horizontal, score)
+
+    return score
+
   end
 
 
@@ -136,4 +176,5 @@ class Scrabble::Board
 end
 
 board = Scrabble::Board.new
-board.play_word_on_board("cat", [0,0], true)
+puts "Playing CAT at 0,0: " + board.score_from_special_board("cat", [0,0], true).to_s
+puts "Playing TOAD at 0,0: " + board.score_from_special_board("toad", [0,0], true).to_s
