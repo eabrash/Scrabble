@@ -1,9 +1,10 @@
 require_relative "../Scrabble_module"
 require_relative "Scrabble_scoring"
 require_relative "Scrabble_tilebag"
+require_relative "Scrabble_dictionary"
 
 class Scrabble::Player
-
+attr_writer :dictionary_on
 attr_reader :name
 
   def initialize(name)
@@ -11,6 +12,7 @@ attr_reader :name
     @plays = []
     @won = false
     @tiles = []
+    @dictionary_on = false
   end
 #plays: returns an Array of the words played by the player
   def plays
@@ -55,13 +57,23 @@ attr_reader :name
       end
       return true
   end
+
+#Is the word they want to play in the dictionary?
+  def dictionary_contains_word?(word)
+     return Scrabble::Dictionary.check_word(word)
+  end
+
 #play(word): Adds the input word to the plays Array
 # Returns false if player has already won
 # Returns the score of the word
   def play(word)
     word.upcase!
     if won? == false && tiles_match_word?(word) == true
-
+      if dictionary_on == true
+        if dictionary_contains_word(word) == false
+          return false
+        end
+      end
        @plays << word
 #delete the played tiles from the player's tile try (@tiles)
        word.each_char do |letter|
