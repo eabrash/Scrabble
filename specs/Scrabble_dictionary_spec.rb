@@ -18,8 +18,8 @@ describe "Testing Scrabble dictionary" do
     expect(Scrabble::Dictionary.check_word("runners")).must_equal(true)
   end
 
-  it "Should say that word longer than 7 letters are no included in the dictionary" do
-    expect(Scrabble::Dictionary.check_word("juggling")).must_equal(false)
+  it "Should say that word longer than 7 letters are included in the dictionary" do
+    expect(Scrabble::Dictionary.check_word("juggling")).must_equal(true)
   end
 
   it "Should say that an empty string is not included in the dictionary" do

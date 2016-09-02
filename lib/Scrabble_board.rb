@@ -63,7 +63,7 @@ class Scrabble::Board
 
     word.upcase!
 
-    if can_fit_on_board?(word, coordinates, is_horizontal) == true #these will change if we move forward! 
+    if can_fit_on_board?(word, coordinates, is_horizontal) == true #these will change if we move forward!
         @board[coordinates[0]][coordinates[1]]= word[0]
         row = coordinates[0]
         column = coordinates[1]
@@ -80,11 +80,11 @@ class Scrabble::Board
           end
         end
 
-        draw_board
+        # draw_board
         return true
 
-    else
-      return false
+    # else
+    #   return false
     end
   end
 
