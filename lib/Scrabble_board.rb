@@ -91,4 +91,4 @@ class Scrabble::Board
 end
 
 board = Scrabble::Board.new
-board.play_word_on_board("cat", [0,0], true)
+board.play_word_on_board("dog", [0,0], true)
