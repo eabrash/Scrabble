@@ -167,5 +167,4 @@ describe "Testing Scrabble player" do
     bob.play("FROG")
     expect(bob.tiles).must_equal(["T","O","A","D","X"])
   end
-
 end

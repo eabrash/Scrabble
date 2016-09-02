@@ -43,21 +43,25 @@ attr_reader :name
     @tiles = preset_tiles
   end
 
+  #do they have the tiles to play the word they want?
+  def tiles_match_word?(word)
+    tiles_to_check = @tiles.clone
+      word.each_char do |letter|
+        if tiles_to_check.index(letter) == nil
+          return false
+        else
+        tiles_to_check.delete_at(tiles_to_check.index(letter))
+        end
+      end
+      return true
+  end
 #play(word): Adds the input word to the plays Array
 # Returns false if player has already won
 # Returns the score of the word
   def play(word)
     word.upcase!
-    if won? == false
-      #do they have the tiles to play the word they want?
-      tiles_to_check = @tiles.clone
-        word.each_char do |letter|
-          if tiles_to_check.index(letter) == nil
-            return false
-          else
-          tiles_to_check.delete_at(tiles_to_check.index(letter))
-          end
-        end
+    if won? == false && tiles_match_word?(word) == true
+
        @plays << word
 #delete the played tiles from the player's tile try (@tiles)
        word.each_char do |letter|
