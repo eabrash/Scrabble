@@ -4,6 +4,21 @@ class Scrabble::Board
 
   attr_reader :board
 
+  SPECIAL_BOARD = [["3W", nil, nil, "2L", nil, nil, nil, "3W", nil, nil, nil, "2L", nil, nil, "3W"],
+                   [nil, "2W", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "2W", nil],
+                   [nil, nil, "2W", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2W", nil, nil],
+                   ["2L", nil, nil, "2W", nil, nil, nil, "2L", nil, nil, nil, "2W", nil, nil, "2L"],
+                   [nil, nil, nil, nil, "2W", nil, nil, nil, nil, nil, "2W", nil, nil, nil, nil],
+                   [nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil],
+                   [nil, nil, "2L", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2L", nil, nil],
+                   ["3W", nil, nil, "2L", nil, nil, nil, "*", nil, nil, nil, "2L", nil, nil, "3W"],
+                   [nil, nil, "2L", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2L", nil, nil],
+                   [nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil],
+                   [nil, nil, nil, nil, "2W", nil, nil, nil, nil, nil, "2W", nil, nil, nil, nil],
+                   ["2L", nil, nil, "2W", nil, nil, nil, "2L", nil, nil, nil, "2W", nil, nil, "2L"],
+                   [nil, nil, "2W", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2W", nil, nil],
+                   [nil, "2W", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "2W", nil],
+                   ["3W", nil, nil, "2L", nil, nil, nil, "3W", nil, nil, nil, "2L", nil, nil, "3W"]]
   def initialize
     @board = [[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
               [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
@@ -21,22 +36,36 @@ class Scrabble::Board
               [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
               [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]]
 
-    @special_board = [["3W", nil, nil, "2L", nil, nil, nil, "3W", nil, nil, nil, "2L", nil, nil, "3W"],
-                      [nil, "2W", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "2W", nil],
-                      [nil, nil, "2W", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2W", nil, nil],
-                      ["2L", nil, nil, "2W", nil, nil, nil, "2L", nil, nil, nil, "2W", nil, nil, "2L"],
-                      [nil, nil, nil, nil, "2W", nil, nil, nil, nil, nil, "2W", nil, nil, nil, nil],
-                      [nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil],
-                      [nil, nil, "2L", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2L", nil, nil],
-                      ["3W", nil, nil, "2L", nil, nil, nil, "*", nil, nil, nil, "2L", nil, nil, "3W"],
-                      [nil, nil, "2L", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2L", nil, nil],
-                      [nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "3L", nil],
-                      [nil, nil, nil, nil, "2W", nil, nil, nil, nil, nil, "2W", nil, nil, nil, nil],
-                      ["2L", nil, nil, "2W", nil, nil, nil, "2L", nil, nil, nil, "2W", nil, nil, "2L"],
-                      [nil, nil, "2W", nil, nil, nil, "2L", nil, "2L", nil, nil, nil, "2W", nil, nil],
-                      [nil, "2W", nil, nil, nil, "3L", nil, nil, nil, "3L", nil, nil, nil, "2W", nil],
-                      ["3W", nil, nil, "2L", nil, nil, nil, "3W", nil, nil, nil, "2L", nil, nil, "3W"]]
           end
+
+  def incorporate_special_letter(letter, row, column)
+       if SPECIAL_BOARD[row][column] == nil || SPECIAL_BOARD[row][column] == "*"
+         return Scrabble::Scoring.score(letter)
+       elsif SPECIAL_BOARD[row][column].last == "2L"
+          return Scrabble::Scoring.score(letter) * 2
+       elsif SPECIAL_BOARD[row][column].last == "3l"
+          return Scrabble::Scoring.score(letter) * 3
+       end
+  end
+
+  def score_from_special_board(word, coordinates, is_horizontal?)
+
+    row = coordinates[0]
+    column = coordinates[1]
+    score = 0
+
+    if is_horizontal == true
+      word.each_char do |letter|
+        score += incorporate_special_letter(letter, row, column)
+        column += 1
+      end
+    else
+      word.each_char do |letter|
+        score += incorporate_special_letter(letter, row, column)
+        row += 1
+      end
+  end
+
 
   def can_fit_on_board?(word, coordinates, is_horizontal)
     if is_horizontal
