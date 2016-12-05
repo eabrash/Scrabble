@@ -9,4 +9,17 @@ class Scrabble::Dictionary
       return @@dictionary.include?(word.downcase)
     end
 
+    def self.ends_in_e
+      words_ending_in_e = []
+      @@dictionary.each do |word|
+        if word[-1,1] == "e"
+          words_ending_in_e << word
+          end
+        end
+     return words_ending_in_e.length
+   end
+
 end
+
+
+print Scrabble::Dictionary.ends_in_e
