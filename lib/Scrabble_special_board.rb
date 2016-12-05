@@ -41,18 +41,12 @@ class Scrabble::Board
 
   def incorporate_special_letter(letter, row, column)
        letter.upcase!
-       puts "Letter: #{letter}, Row: #{row}, Column: #{column}"
        if SPECIAL_BOARD[row][column] == nil || SPECIAL_BOARD[row][column] == "*" || SPECIAL_BOARD[row][column] == "2W" || SPECIAL_BOARD[row][column] == "3W"
-         puts "If not letter-ly special"
          return Scrabble::Scoring.score(letter)
        elsif SPECIAL_BOARD[row][column] == "2L"
-          puts "If 2L special"
           return Scrabble::Scoring.score(letter) * 2
        elsif SPECIAL_BOARD[row][column] == "3L"
-          puts "If 3L special"
           return Scrabble::Scoring.score(letter) * 3
-        else
-          puts "WEIRDNESS OCCURRED"
        end
   end
 
@@ -127,11 +121,11 @@ class Scrabble::Board
   def are_spots_available?(word, coordinates, is_horizontal)
     row = coordinates[0]
     column = coordinates[1]
-    any_filled = false
+    spots_available = true
     if is_horizontal == true
       word.each_char do
         if @board[row][column] != nil
-          any_filled = true
+          spots_available = false
           break
         end
         column += 1
@@ -139,13 +133,13 @@ class Scrabble::Board
     else
       word.each_char do
         if @board[row][column]
-          any_filled = true
+          spots_available = false
           break
         end
       row += 1
       end
     end
-    return any_filled
+    return spots_available
   end
 
   def touches_other_letters?(word, coordinates, is_horizontal)
@@ -252,12 +246,12 @@ class Scrabble::Board
 
 end
 
-board = Scrabble::Board.new
-
-puts "Can we play CAT at 4, 7? : " + board.touches_other_letters?("CAT", [4,7], false).to_s
-puts "Playing CAT at 4,7: " + board.play_word_on_board("cat", [4,7], false).to_s
-board.draw_board
-
-puts "Can we play [A]NT at 5, 8? : " + board.touches_other_letters?("NT", [5,8], true).to_s
-puts "Playing [A]NT at 5,8: " + board.play_word_on_board("NT", [5,8], true).to_s
-board.draw_board
+# board = Scrabble::Board.new
+#
+# puts "Can we play CAT at 4, 7? : " + board.touches_other_letters?("CAT", [4,7], false).to_s
+# puts "Playing CAT at 4,7: " + board.play_word_on_board("cat", [4,7], false).to_s
+# board.draw_board
+#
+# puts "Can we play [A]NT at 5, 8? : " + board.touches_other_letters?("NT", [5,8], true).to_s
+# puts "Playing [A]NT at 5,8: " + board.play_word_on_board("NT", [5,8], true).to_s
+# board.draw_board

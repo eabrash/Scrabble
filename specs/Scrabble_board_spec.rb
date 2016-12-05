@@ -59,9 +59,19 @@ describe "Testing Scrabble board" do
     expect(board.play_word_on_board("cat", [0,13], true)).must_equal(false)
   end
 
+  it "Check that a word is not considered to fit on the board when placed there horizontally if it doesn't fit" do
+    board = Scrabble::Board.new
+    expect(board.can_fit_on_board?("cat", [0,13], true)).must_equal(false)
+  end
+
   it "Check that a word is not stored on the board when placed there vertically if it doesn't fit" do
     board = Scrabble::Board.new
     expect(board.play_word_on_board("cat", [13,2], false)).must_equal(false)
+  end
+
+  it "Check that a word is not considered to fit on the board when placed there vertically if it doesn't fit" do
+    board = Scrabble::Board.new
+    expect(board.can_fit_on_board?("cat", [13,2], false)).must_equal(false)
   end
 
   # it "Tell if coordinates are valid" do
